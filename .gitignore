@@ -1,0 +1,5 @@
+*.elf
+*.3dsx
+
+build/
+out/

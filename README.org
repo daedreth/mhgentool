@@ -1,0 +1,9 @@
+#+STARTUP: overview
+#+TITLE: MHGenTool
+#+CREATOR: Dawid 'daedreth' Eckert
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+
+THIS IS A WORK IN PROGRESS THE CODE SUCKS AND NOTHING WORKS CALM DOWN.
+
+A multitool for Monster Hunter Generations saves.
