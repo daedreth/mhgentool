@@ -1,0 +1,1 @@
+Result MHGEN_CreateToolDirectories();
