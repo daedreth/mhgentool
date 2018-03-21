@@ -5,7 +5,8 @@
 
 Result MHGEN_drawMainMenu()
 {
-  u32 cursorPosition = 0;
+  u8 cursorPosition = 0;
+  
   while (aptMainLoop())
     {
       hidScanInput();
@@ -14,19 +15,42 @@ Result MHGEN_drawMainMenu()
 
       pp2d_frame_begin(GFX_TOP, GFX_LEFT);
 
+      // top screen background
       pp2d_frame_draw_on(GFX_TOP, GFX_LEFT);
       pp2d_texture_select_part(0, 0, 0, 0, 240, 400, 240);
       pp2d_texture_queue();
 
+      // bottom screen background
       pp2d_frame_draw_on(GFX_BOTTOM, GFX_LEFT);
       pp2d_texture_select_part(0, 0, 0, 0, 0, 320, 240);
       pp2d_texture_queue();
-      
+
+      // selection sprite
+      pp2d_texture_select_part(0, 15, 20 + (cursorPosition * 65), 321, 58, 207, 56);
+      pp2d_texture_queue();
+
+      // button sprites
       for (u8 menuCounter = 0; menuCounter < (sizeof mainMenuOptions / sizeof *mainMenuOptions); ++menuCounter)
-	pp2d_draw_textf(37, 50 + (MENU_SEPARATOR * menuCounter), 0.5f, 0.5f, COLOR_WHITE, "%s", mainMenuOptions[menuCounter]);
+	{
+	  pp2d_texture_select_part(0, 15, 20 + (menuCounter * 65), 321, 1, 207, 56);
+	  pp2d_texture_queue();
+	}
 
-      pp2d_draw_text(15, 50 + (MENU_SEPARATOR * cursorPosition), 0.5f, 0.5f, COLOR_WHITE, "->");
+      for (u8 menuCounter = 0; menuCounter < (sizeof mainMenuOptions / sizeof *mainMenuOptions); ++menuCounter)
+	{
+	  pp2d_texture_select_part(0, 20, 20 + (menuCounter * 65), 321 + 208, 1+(menuCounter * 56) + ((menuCounter != 0) ? 1 : 0), 207, 56);
+	  pp2d_texture_queue();
+	}
 
+      //      pp2d_texture_select_part(0, 15, 20, 321 + 208, 1, 207, 56);
+      //      pp2d_texture_queue();
+      //      pp2d_texture_select_part(0, 15, 20 + 65, 321 + 208, 1 + 56, 207, 56);
+      //      pp2d_texture_queue();
+      
+      // move cursor up and down
+      if((hidKeysDown() & KEY_UP) && (cursorPosition > 0)) cursorPosition--;
+      if((hidKeysDown() & KEY_DOWN) && (cursorPosition < 2)) cursorPosition++;
+      
       if(hidKeysDown() & KEY_START) return 100;
       pp2d_frame_end();
     }
