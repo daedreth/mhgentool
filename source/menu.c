@@ -38,14 +38,9 @@ Result MHGEN_drawMainMenu()
 
       for (u8 menuCounter = 0; menuCounter < (sizeof mainMenuOptions / sizeof *mainMenuOptions); ++menuCounter)
 	{
-	  pp2d_texture_select_part(0, 20, 20 + (menuCounter * 65), 321 + 208, 1+(menuCounter * 56) + ((menuCounter != 0) ? 1 : 0), 207, 56);
+	  pp2d_texture_select_part(0, 20, 20 + (menuCounter * 65), 529, (menuCounter * 56) + (menuCounter + 1), 207, 56);
 	  pp2d_texture_queue();
 	}
-
-      //      pp2d_texture_select_part(0, 15, 20, 321 + 208, 1, 207, 56);
-      //      pp2d_texture_queue();
-      //      pp2d_texture_select_part(0, 15, 20 + 65, 321 + 208, 1 + 56, 207, 56);
-      //      pp2d_texture_queue();
       
       // move cursor up and down
       if((hidKeysDown() & KEY_UP) && (cursorPosition > 0)) cursorPosition--;
