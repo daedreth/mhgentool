@@ -1,6 +1,7 @@
 #include <3ds.h>
 #include "pp2d.h"
 #include "utilities.h"
+#include "backup.h"
 #include "menu.h"
 
 int main()
@@ -23,6 +24,9 @@ int main()
     switch(res){
     case 0:
       res = MHGEN_drawMainMenu(); // menu.h
+      break;
+    case 2:
+      res = MHGEN_drawBackupMenu(); // backup.h
       break;
     default:
       return 0;

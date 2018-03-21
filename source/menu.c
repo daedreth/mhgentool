@@ -5,7 +5,7 @@
 
 Result MHGEN_drawMainMenu()
 {
-  u8 cursorPosition = 0;
+  u8 cursorPosition = 1;
   
   while (aptMainLoop())
     {
@@ -31,7 +31,7 @@ Result MHGEN_drawMainMenu()
       pp2d_texture_queue();
 
       // selection sprite
-      pp2d_texture_select_part(0, 12, 20 + (cursorPosition * 65), 321, 58, 207, 56);
+      pp2d_texture_select_part(0, 12, 20 + ((cursorPosition - 1) * 65), 321, 58, 207, 56);
       pp2d_texture_queue();
 
       // button sprites
@@ -62,8 +62,16 @@ Result MHGEN_drawMainMenu()
       pp2d_texture_queue();
       
       // move cursor up and down
-      if((hidKeysDown() & KEY_UP) && (cursorPosition > 0)) cursorPosition--;
-      if((hidKeysDown() & KEY_DOWN) && (cursorPosition < 2)) cursorPosition++;
+      if((hidKeysDown() & KEY_UP) && (cursorPosition > 1)) cursorPosition--;
+      if((hidKeysDown() & KEY_DOWN) && (cursorPosition < 3)) cursorPosition++;
+
+      if(hidKeysDown() & KEY_A)
+	{
+	  if(cursorPosition == 2)
+	    {
+	      return 2;
+	    }
+	}
       
       if(hidKeysDown() & KEY_START) return 100;
       pp2d_frame_end();
