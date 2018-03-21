@@ -19,7 +19,7 @@ Result MHGEN_drawMainMenu()
       pp2d_texture_select_part(0, 0, 0, 0, 240, 400, 240);
       pp2d_texture_queue();
 
-      // top screen logo
+      // logo
       pp2d_texture_select_part(0, 0, 0, 0, 480, 400, 240);
       pp2d_texture_queue();
 
@@ -58,7 +58,7 @@ Result MHGEN_drawMainMenu()
 
 
       // help option
-      pp2d_texture_select_part(0, 230, 120 , 737, 1, 79, 84);
+      pp2d_texture_select_part(0, 230, 120 , 401, 240, 79, 84);
       pp2d_texture_queue();
       
       // move cursor up and down
