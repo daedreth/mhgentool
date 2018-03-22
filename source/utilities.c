@@ -71,3 +71,61 @@ Result MHGEN_NoExtdataError()
   FSUSER_CloseArchive(extdataArchive);
   return 0;
 }
+
+Result MHGEN_ShowGenericError()
+{
+    while(aptMainLoop())
+      {
+	hidScanInput();      
+
+	// restart frame
+	pp2d_frame_end();
+	pp2d_frame_begin(GFX_TOP, GFX_LEFT);
+    
+	// top screen background
+	pp2d_texture_select_part(0, 0, 0, 0, 240, 400, 240);
+	pp2d_texture_queue();
+
+	// top screen error texture
+	pp2d_texture_select_part(0, 95, 80, 321, 172, 207, 67);
+	pp2d_texture_queue();
+
+	pp2d_frame_draw_on(GFX_BOTTOM, GFX_LEFT);
+
+	// error texture
+	pp2d_texture_select_part(0, 55, 80, 529, 172, 207, 67);
+	pp2d_texture_queue();
+
+	if(hidKeysDown() & KEY_B) return 100;
+      }
+  return 0;
+}
+
+Result MHGEN_ShowGenericSuccess()
+{
+    while(aptMainLoop())
+      {
+	hidScanInput();      
+
+	// restart frame
+	pp2d_frame_end();
+	pp2d_frame_begin(GFX_TOP, GFX_LEFT);
+
+	// top screen background
+	pp2d_texture_select_part(0, 0, 0, 0, 240, 400, 240);
+	pp2d_texture_queue();
+
+	// logo
+	pp2d_texture_select_part(0, 0, 0, 0, 480, 400, 240);
+	pp2d_texture_queue();
+
+	pp2d_frame_draw_on(GFX_BOTTOM, GFX_LEFT);
+
+	// success texture
+	pp2d_texture_select_part(0, 55, 80, 500, 172, 207, 67);
+	pp2d_texture_queue();
+
+	if(hidKeysDown() & KEY_B) return 100;
+      }
+  return 0;
+}

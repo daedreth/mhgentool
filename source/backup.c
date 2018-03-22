@@ -2,6 +2,7 @@
 #include <backup.h>
 #include "pp2d.h"
 #include "colors.h"
+#include "utilities.h"
 #include <stdlib.h>
 
 Result MHGEN_BackupSingleSave(u32 archiveID, char* path, char* dest, u32 saveSize)
@@ -52,6 +53,8 @@ Result MHGEN_BackupSingleSave(u32 archiveID, char* path, char* dest, u32 saveSiz
 
 Result MHGEN_BackupSaves()
 {
+
+      
   u32 archiveCode;
   Result res = 0;
 
@@ -135,7 +138,14 @@ Result MHGEN_drawBackupMenu()
 	  if(cursorPosition == 1)
 	    {
 	      res = MHGEN_BackupSaves();
-	      if(R_FAILED(res)) return res;
+	      if(R_FAILED(res))
+		{
+		  MHGEN_ShowGenericError();
+		}
+	      else
+		{
+		  MHGEN_ShowGenericSuccess();
+	      }
 	    }
 	}
       
