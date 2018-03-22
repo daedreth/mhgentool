@@ -53,8 +53,6 @@ Result MHGEN_BackupSingleSave(u32 archiveID, char* path, char* dest, u32 saveSiz
 
 Result MHGEN_BackupSaves()
 {
-
-      
   u32 archiveCode;
   Result res = 0;
 
@@ -83,84 +81,7 @@ Result MHGEN_BackupSaves()
   return 0;
 }
 
-Result MHGEN_drawBackupMenu()
-{
-    u8 cursorPosition = 1;
-    Result res = 0;
-    
-  while (aptMainLoop())
-    {
-      hidScanInput();
-      
-      pp2d_frame_begin(GFX_TOP, GFX_LEFT);
-
-      pp2d_frame_draw_on(GFX_TOP, GFX_LEFT);
-      
-      // top screen background
-      pp2d_texture_select_part(0, 0, 0, 0, 240, 400, 240);
-      pp2d_texture_queue();
-
-      // logo
-      pp2d_texture_select_part(0, 0, 0, 0, 480, 400, 240);
-      pp2d_texture_queue();
-
-      pp2d_frame_draw_on(GFX_BOTTOM, GFX_LEFT);
-      
-      // bottom screen background
-      pp2d_texture_select_part(0, 0, 0, 0, 0, 320, 240);
-      pp2d_texture_queue();
-
-      // selection sprite
-      pp2d_texture_select_part(0, 12, 20 + ((cursorPosition - 1) * 65), 321, 58, 207, 56);
-      pp2d_texture_queue();
-
-      // button sprites
-      for (u8 menuCounter = 0; menuCounter < 3; ++menuCounter)
-	{
-	  pp2d_texture_select_part(0, 12, 20 + (menuCounter * 65), 321, 1, 207, 56);
-	  pp2d_texture_queue();
-	}
-
-      // button text
-      for (u8 menuCounter = 0; menuCounter < 3; ++menuCounter)
-	{
-	  pp2d_texture_select_part(0, 17, 20 + (menuCounter * 65), 737, (menuCounter * 56) + (menuCounter + 1), 207, 56);
-	  pp2d_texture_queue();
-	}
-
-      // help option
-      pp2d_texture_select_part(0, 230, 120 , 401, 240, 79, 84);
-      pp2d_texture_queue();
-
-
-      if(hidKeysDown() & KEY_A)
-	{
-	  if(cursorPosition == 1)
-	    {
-	      res = MHGEN_BackupSaves();
-	      if(R_FAILED(res))
-		{
-		  MHGEN_ShowGenericError();
-		}
-	      else
-		{
-		  MHGEN_ShowGenericSuccess();
-	      }
-	    }
-	}
-      
-      // move cursor up and down
-      if((hidKeysDown() & KEY_UP) && (cursorPosition > 1)) cursorPosition--;
-      if((hidKeysDown() & KEY_DOWN) && (cursorPosition < 3)) cursorPosition++;
-
-      if(hidKeysDown() & KEY_B) return 0;
-      
-      pp2d_frame_end();
-    }
-  return 0;
-}
-/*
-Result importSingleSave(u32 archiveID, char* path, char* dest, u32 saveSize)
+Result MHGEN_ImportSingleSave(u32 archiveID, char* path, char* dest, u32 saveSize)
 {
   FS_Archive sdcardArchive;
   FS_Archive extdataArchive;
@@ -207,7 +128,7 @@ Result importSingleSave(u32 archiveID, char* path, char* dest, u32 saveSize)
   return 0;
 }
 
-Result importSaveAndBackup()
+Result MHGEN_ImportSaveAndBackup()
 {
   u32 archiveCode;
   Result res = 0;
@@ -229,15 +150,15 @@ Result importSaveAndBackup()
       archiveCode = 0x00;
     }
 
-  res = importSingleSave(archiveCode, "/mhgentool/system", "/system", 4000815);
+  res = MHGEN_ImportSingleSave(archiveCode, "/mhgentool/system", "/system", 4000815);
   if(R_FAILED(res)) return res;
-  res = importSingleSave(archiveCode, "/mhgentool/system_backup", "/system_backup", 4000815);
+  res = MHGEN_ImportSingleSave(archiveCode, "/mhgentool/system_backup", "/system_backup", 4000815);
   if(R_FAILED(res)) return res;
 
   return 0;
 }
 
-Result deleteSaveAndBackup()
+Result MHGEN_DeleteSaveAndBackup()
 {
   u64 archiveCode;
   Result res = 0;
@@ -267,4 +188,82 @@ Result deleteSaveAndBackup()
  
   return 0;
 }
-*/
+
+
+Result MHGEN_drawBackupMenu()
+{
+  u8 cursorPosition = 1;
+  Result res = 0;
+    
+  while (aptMainLoop())
+    {
+      hidScanInput();
+      
+      pp2d_frame_begin(GFX_TOP, GFX_LEFT);
+
+      pp2d_frame_draw_on(GFX_TOP, GFX_LEFT);
+      
+      // top screen background
+      pp2d_texture_select_part(0, 0, 0, 0, 240, 400, 240);
+      pp2d_texture_queue();
+
+      // logo
+      pp2d_texture_select_part(0, 0, 0, 0, 480, 400, 240);
+      pp2d_texture_queue();
+
+      pp2d_frame_draw_on(GFX_BOTTOM, GFX_LEFT);
+      
+      // bottom screen background
+      pp2d_texture_select_part(0, 0, 0, 0, 0, 320, 240);
+      pp2d_texture_queue();
+
+      // selection sprite
+      pp2d_texture_select_part(0, 12, 20 + ((cursorPosition - 1) * 65), 321, 58, 207, 56);
+      pp2d_texture_queue();
+
+      // button sprites
+      for (u8 menuCounter = 0; menuCounter < 3; ++menuCounter)
+	{
+	  pp2d_texture_select_part(0, 12, 20 + (menuCounter * 65), 321, 1, 207, 56);
+	  pp2d_texture_queue();
+	}
+
+      // button text
+      for (u8 menuCounter = 0; menuCounter < 3; ++menuCounter)
+	{
+	  pp2d_texture_select_part(0, 17, 20 + (menuCounter * 65), 737, (menuCounter * 56) + (menuCounter + 1), 207, 56);
+	  pp2d_texture_queue();
+	}
+
+      // help option
+      pp2d_texture_select_part(0, 230, 120 , 401, 240, 79, 84);
+      pp2d_texture_queue();
+
+      if(hidKeysDown() & KEY_A) switch(cursorPosition)
+	    {
+	    case 1:
+	      res = MHGEN_BackupSaves();
+	      if(R_FAILED(res)) MHGEN_ShowGenericError(); else MHGEN_ShowGenericSuccess();
+	      break;
+	    case 2:
+	      res = MHGEN_ImportSaveAndBackup();
+	      if(R_FAILED(res)) MHGEN_ShowGenericError(); else MHGEN_ShowGenericSuccess();
+	      break;
+	    case 3:
+	      res = MHGEN_DeleteSaveAndBackup();
+	      if(R_FAILED(res)) MHGEN_ShowGenericError(); else MHGEN_ShowGenericSuccess();
+	      break;
+	    default:
+	      res = 0;
+	    }
+      
+      // move cursor up and down
+      if((hidKeysDown() & KEY_UP) && (cursorPosition > 1)) cursorPosition--;
+      if((hidKeysDown() & KEY_DOWN) && (cursorPosition < 3)) cursorPosition++;
+
+      if(hidKeysDown() & KEY_B) return 0;
+      
+      pp2d_frame_end();
+    }
+  return 0;
+}

@@ -51,11 +51,8 @@ Result MHGEN_drawMainMenu()
       // strikethrough, these get removed as options are added
       pp2d_texture_select_part(0, 12, 20 , 321, 114, 207, 56);
       pp2d_texture_queue();
-      pp2d_texture_select_part(0, 12, 85, 321, 114, 207, 56);
-      pp2d_texture_queue();
       pp2d_texture_select_part(0, 12, 150, 321, 114, 207, 56);
       pp2d_texture_queue();
-
 
       // help option
       pp2d_texture_select_part(0, 230, 120 , 401, 240, 79, 84);
