@@ -62,7 +62,7 @@ Result MHGEN_NoExtdataError()
 	pp2d_frame_draw_on(GFX_BOTTOM, GFX_LEFT);
 
 	// error texture
-	pp2d_texture_select_part(0, 55, 80, 529, 172, 207, 67);
+	pp2d_texture_select_part(0, 55, 60, 529, 172, 207, 100);
 	pp2d_texture_queue();
 
 	if(hidKeysDown() & KEY_START) return 100;
@@ -93,7 +93,7 @@ Result MHGEN_ShowGenericError()
 	pp2d_frame_draw_on(GFX_BOTTOM, GFX_LEFT);
 
 	// error texture
-	pp2d_texture_select_part(0, 55, 80, 529, 172, 207, 67);
+	pp2d_texture_select_part(0, 55, 80, 737, 273, 207, 100);
 	pp2d_texture_queue();
 
 	if(hidKeysDown() & KEY_B) return 100;
@@ -122,10 +122,40 @@ Result MHGEN_ShowGenericSuccess()
 	pp2d_frame_draw_on(GFX_BOTTOM, GFX_LEFT);
 
 	// success texture
-	pp2d_texture_select_part(0, 55, 80, 500, 172, 207, 67);
+	pp2d_texture_select_part(0, 55, 80, 529, 273, 207, 100);
 	pp2d_texture_queue();
 
 	if(hidKeysDown() & KEY_B) return 100;
+      }
+  return 0;
+}
+
+Result MHGEN_ShowConfirmationDialog()
+{
+      while(aptMainLoop())
+      {
+	hidScanInput();      
+
+	// restart frame
+	pp2d_frame_end();
+	pp2d_frame_begin(GFX_TOP, GFX_LEFT);
+
+	// top screen background
+	pp2d_texture_select_part(0, 0, 0, 0, 240, 400, 240);
+	pp2d_texture_queue();
+
+	// logo
+	pp2d_texture_select_part(0, 0, 0, 0, 480, 400, 240);
+	pp2d_texture_queue();
+
+	pp2d_frame_draw_on(GFX_BOTTOM, GFX_LEFT);
+
+	// question texture
+	pp2d_texture_select_part(0, 55, 80, 737, 172, 207, 100);
+	pp2d_texture_queue();
+
+	if(hidKeysDown() & KEY_B) return 0;
+	if(hidKeysDown() & KEY_A) return 1;
       }
   return 0;
 }

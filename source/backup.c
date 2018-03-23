@@ -250,8 +250,12 @@ Result MHGEN_drawBackupMenu()
 	      if(R_FAILED(res)) MHGEN_ShowGenericError(); else MHGEN_ShowGenericSuccess();
 	      break;
 	    case 3:
-	      res = MHGEN_DeleteSaveAndBackup();
-	      if(R_FAILED(res)) MHGEN_ShowGenericError(); else MHGEN_ShowGenericSuccess();
+	      res = MHGEN_ShowConfirmationDialog();
+	      if(res)
+		{
+		  res = MHGEN_DeleteSaveAndBackup();
+		  if(R_FAILED(res)) MHGEN_ShowGenericError(); else MHGEN_ShowGenericSuccess();
+		}
 	      break;
 	    default:
 	      res = 0;
